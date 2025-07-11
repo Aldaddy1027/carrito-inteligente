@@ -1,22 +1,10 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState, AppDispatch } from "@/src/features/common/application/redux/store";
-import { addItem } from "@/src/features/cart/application/redux/cartSlice";
-import type { ICartItem } from "@/src/features/cart/domain/interfaces/ICartState";
 import { Container, Typography, Button, Paper } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const items = useSelector((state: RootState) => state.cart.items);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleAdd = () => {
-    const newItem: ICartItem = {
-      id: Date.now(),
-      name: `Producto ${items.length + 1}`,
-    };
-    dispatch(addItem(newItem));
-  };
+  const router = useRouter();
 
   return (
     <Container maxWidth="sm" sx={{ mt: 6 }}>
@@ -27,7 +15,7 @@ export default function Home() {
         <Typography variant="body1" color="text.secondary" gutterBottom>
           Explora nuestras características y descubre cómo podemos ayudarte a gestionar tus compras de manera eficiente.
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 3 }}>
+        <Button variant="contained" color="primary" sx={{ mt: 3 }} onClick={() => router.push('/catalogo')}>
           Comenzar
         </Button>
       </Paper>
