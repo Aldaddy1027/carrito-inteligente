@@ -1,9 +1,13 @@
 "use client";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Provider } from 'react-redux';
 import { store } from '@/src/features/common/application/redux/store';
+import { Box, CssBaseline, Drawer, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import CategoryIcon from '@mui/icons-material/Category';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useState } from 'react';
+import Link from 'next/link';
 
 const APP_NAME = 'Carrito Inteligente'
 const APP_DESCRIPTION = 'Sistema de carrito inteligente'
@@ -20,6 +24,82 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const drawerWidth = 240;
+
+  const MiniDrawer = () => {
+    const [open, setOpen] = useState(false);
+
+    const handleDrawerToggle = () => {
+      setOpen(!open);
+    };
+
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{
+            width: open ? `calc(100% - ${drawerWidth}px)` : '100%',
+            ml: open ? `${drawerWidth}px` : 0,
+            transition: 'width 0.3s',
+          }}
+        >
+          <Toolbar>
+            <Typography variant="h6" noWrap component="div" sx={{ paddingLeft: open ? 1 : 6 }}>
+              {APP_NAME}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          open={open}
+          sx={{
+            width: open ? drawerWidth : 60,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: open ? drawerWidth : 60,
+              boxSizing: 'border-box',
+              transition: 'width 0.3s',
+              overflowX: 'hidden',
+            },
+          }}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="toggle drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ color: 'black', zIndex: 1300, }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <List>
+            {['Catalogo', 'Carrito'].map((text, index) => (
+              <Link href={`/${text.toLowerCase().replace(' ', '-')}`} key={text} passHref>
+                <ListItem >
+                  <ListItemIcon>
+                    {index === 0 ? <CategoryIcon /> : <ShoppingCartIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: 'background.default', p: open ? 6 : 3 }}
+        >
+          <Toolbar />
+          <Provider store={store}>{children}</Provider>
+        </Box>
+      </Box>
+    );
+  };
+
   return (
     <html lang='es' dir='ltr' data-lt-installed="true" suppressHydrationWarning={true}>
       <head>
@@ -39,7 +119,7 @@ export default function RootLayout({
 
       </head>
       <body className={`antialiased`}>
-        <Provider store={store}>{children}</Provider>
+        <MiniDrawer />
       </body>
     </html>
   );

@@ -21,29 +21,16 @@ export default function Home() {
 
   return (
     <Container maxWidth="sm" sx={{ mt: 6 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Carrito de compras (Redux + MUI)
+      <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
+        <Typography variant="h3" gutterBottom>
+          ¡Bienvenido a Carrito Inteligente!
         </Typography>
-        <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleAdd}>
-            Agregar producto
-          </Button>
-        </Stack>
-        <List>
-          {items.map((item: ICartItem) => (
-            <ListItem
-              key={item.id}
-              secondaryAction={
-                <IconButton edge="end" color="error" onClick={() => dispatch(removeItem(item.id))}>
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
-              <ListItemText primary={item.name} />
-            </ListItem>
-          ))}
-        </List>
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Explora nuestras características y descubre cómo podemos ayudarte a gestionar tus compras de manera eficiente.
+        </Typography>
+        <Button variant="contained" color="primary" sx={{ mt: 3 }}>
+          Comenzar
+        </Button>
       </Paper>
     </Container>
   );
