@@ -13,6 +13,7 @@ export interface IProductItems {
     category: string;
     stock: number;
     isActive: boolean;
+    variations?: string[];
 }
 
 /**

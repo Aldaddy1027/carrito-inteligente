@@ -10,6 +10,7 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 1',
         stock: 100,
         isActive: true,
+        variations: ['S', 'M', 'L'],
     },
     {
         id: 2,
@@ -20,6 +21,7 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 2',
         stock: 50,
         isActive: true,
+        variations: ['Rojo', 'Azul', 'Verde'],
     },
     {
         id: 3,
@@ -30,6 +32,7 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 1',
         stock: 75,
         isActive: true,
+        variations: ['Pequeño', 'Mediano', 'Grande'],
     },
     {
         id: 4,
@@ -40,6 +43,7 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 3',
         stock: 30,
         isActive: true,
+        variations: ['Blanco', 'Negro'],
     },
     {
         id: 5,
@@ -50,6 +54,7 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 2',
         stock: 60,
         isActive: true,
+        variations: ['XS', 'S', 'M', 'L', 'XL'],
     },
     {
         id: 6,
@@ -60,6 +65,7 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 3',
         stock: 25,
         isActive: true,
+        variations: ['Amarillo', 'Naranja'],
     },
     {
         id: 7,
@@ -70,5 +76,6 @@ export const sampleProducts: IProductItems[] = [
         category: 'Categoría 1',
         stock: 40,
         isActive: true,
+        variations: ['Único'],
     },
 ];

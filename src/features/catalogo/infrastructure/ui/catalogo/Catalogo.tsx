@@ -3,7 +3,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "@/src/features/common/application/redux/store";
 import { addItem } from "@/src/features/cart/application/redux/cartSlice";
-import { Typography, Button, List, ListItem, ListItemText, Box } from "@mui/material";
+import { Typography, Button, List, ListItem, ListItemText, Box, Select, MenuItem } from "@mui/material";
 import { IProductItems } from "@/src/features/catalogo/domain/interfaces/ICatalogoState";
 import { useEffect, useState } from 'react';
 import { setItems } from '@/src/features/catalogo/application/redux/catalogoSlice';
@@ -24,6 +24,8 @@ const Catalogo = () => {
         return initialQuantities;
     });
 
+    const [selectedVariations, setSelectedVariations] = useState<{ [key: number]: string }>({});
+
     /**
      * Effect hook that initializes the catalog items on component mount
      * Dispatches the sample products to the Redux store
@@ -42,6 +44,13 @@ const Catalogo = () => {
         setQuantities((prev) => ({
             ...prev,
             [id]: Math.max(0, (prev[id] || 0) + amount),
+        }));
+    };
+
+    const handleVariationChange = (id: number, variation: string) => {
+        setSelectedVariations((prev) => ({
+            ...prev,
+            [id]: variation,
         }));
     };
 
@@ -76,17 +85,30 @@ const Catalogo = () => {
                             primary={item.name}
                             secondary={`Precio: $${item.price} - ${item.description}`}
                         />
+                        {item.variations && (
+                            <Select
+                                value={selectedVariations[item.id] || ''}
+                                onChange={(e) => handleVariationChange(item.id, e.target.value)}
+                                displayEmpty
+                            >
+                                <MenuItem value="" disabled>Selecciona una variación</MenuItem>
+                                {item.variations.map((variation) => (
+                                    <MenuItem key={variation} value={variation}>{variation}</MenuItem>
+                                ))}
+                            </Select>
+                        )}
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Button onClick={() => handleQuantityChange(item.id, -1)}>-</Button>
+                            <Button onClick={() => handleQuantityChange(item.id, -1)} disabled={quantities[item.id] <= 1}>-</Button>
                             <Typography sx={{ mx: 2 }}>{quantities[item.id] || 1}</Typography>
-                            <Button onClick={() => handleQuantityChange(item.id, 1)}>+</Button>
+                            <Button onClick={() => handleQuantityChange(item.id, 1)} disabled={quantities[item.id] >= item.stock}>+</Button>
                         </Box>
                         <Button
                             variant="outlined"
                             color="primary"
                             onClick={() => handleAddToCart(item)}
+                            disabled={item.stock === 0}
                         >
-                            Agregar a carrito
+                            {item.stock === 0 ? 'Agotado' : 'Agregar a carrito'}
                         </Button>
                     </ListItem>
                 ))}

@@ -8,11 +8,16 @@ import { Typography, Button, List, ListItem, ListItemText, IconButton, Stack, Bo
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const Cart = () => {
-    const items = useSelector((state: RootState) => state.cart.items);
     const dispatch = useDispatch<AppDispatch>();
+    const items = useSelector((state: RootState) => state.cart.items);
 
     const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
+    /**
+     * Maneja el cambio de cantidad de un item en el carrito
+     * @param id - ID del item a modificar
+     * @param amount - Cantidad a sumar o restar (positivo para aumentar, negativo para disminuir)
+     */
     const handleQuantityChange = (id: number, amount: number) => {
         const item = items.find(item => item.id === id);
         if (item) {
@@ -34,7 +39,7 @@ const Cart = () => {
                 {items.map((item: ICartItem) => (
                     <ListItem key={item.id}>
                         <ListItemText
-                            primary={item.name}
+                            primary={`${item.name} - ${item.variation || 'Sin variación'}`}
                             secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
                         />
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
