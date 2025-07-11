@@ -11,12 +11,18 @@ const Cart = () => {
     const items = useSelector((state: RootState) => state.cart.items);
     const dispatch = useDispatch<AppDispatch>();
 
-    const handleAdd = () => {
-        const newItem: ICartItem = {
-            id: Date.now(),
-            name: `Producto ${items.length + 1}`,
-        };
-        dispatch(addItem(newItem));
+    const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
+
+    const handleQuantityChange = (id: number, amount: number) => {
+        const item = items.find(item => item.id === id);
+        if (item) {
+            const newQuantity = Math.max(0, item.quantity + amount);
+            if (newQuantity > 0) {
+                dispatch(addItem({ ...item, quantity: newQuantity - item.quantity }));
+            } else {
+                dispatch(removeItem(id));
+            }
+        }
     };
 
     return (
@@ -26,18 +32,25 @@ const Cart = () => {
             </Typography>
             <List>
                 {items.map((item: ICartItem) => (
-                    <ListItem
-                        key={item.id}
-                        secondaryAction={
-                            <IconButton edge="end" color="error" onClick={() => dispatch(removeItem(item.id))}>
-                                <DeleteIcon />
-                            </IconButton>
-                        }
-                    >
-                        <ListItemText primary={item.name} />
+                    <ListItem key={item.id}>
+                        <ListItemText
+                            primary={item.name}
+                            secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
+                        />
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Button onClick={() => handleQuantityChange(item.id, -1)}>-</Button>
+                            <Typography sx={{ mx: 2 }}>{item.quantity}</Typography>
+                            <Button onClick={() => handleQuantityChange(item.id, 1)}>+</Button>
+                        </Box>
+                        <IconButton edge="end" color="error" onClick={() => dispatch(removeItem(item.id))}>
+                            <DeleteIcon />
+                        </IconButton>
                     </ListItem>
                 ))}
             </List>
+            <Typography variant="h6" sx={{ textAlign: 'right', mt: 2 }}>
+                Total: ${totalAmount.toFixed(2)}
+            </Typography>
         </Box>
     );
 }

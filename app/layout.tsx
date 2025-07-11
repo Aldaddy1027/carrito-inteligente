@@ -2,7 +2,7 @@
 import "./globals.css";
 import { Provider } from 'react-redux';
 import { store } from '@/src/features/common/application/redux/store';
-import { Box, CssBaseline, Drawer, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import { Box, CssBaseline, Drawer, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Badge } from '@mui/material';
 import CategoryIcon from '@mui/icons-material/Category';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -48,6 +48,11 @@ export default function RootLayout({
             <Typography variant="h6" noWrap component="div" sx={{ paddingLeft: open ? 1 : 6 }}>
               {APP_NAME}
             </Typography>
+            <IconButton color="inherit" component={Link} href="/carrito" sx={{ ml: 2 }}>
+              <Badge badgeContent={1} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer
