@@ -2,10 +2,8 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "@/src/features/common/application/redux/store";
-import { addItem, removeItem } from "@/src/features/cart/application/redux/cartSlice";
-import type { ICartItem } from "@/src/features/cart/domain/interfaces/ICartState";
-import { Typography, Button, List, ListItem, ListItemText, IconButton, Stack, Box } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { addItem } from "@/src/features/cart/application/redux/cartSlice";
+import { Typography, Button, List, ListItem, ListItemText, Box } from "@mui/material";
 import { IProductItems } from "@/src/features/catalogo/domain/interfaces/ICatalogoState";
 import { useEffect } from 'react';
 import { setItems } from '@/src/features/catalogo/application/redux/catalogoSlice';

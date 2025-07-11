@@ -2,10 +2,9 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "@/src/features/common/application/redux/store";
-import { addItem, removeItem } from "@/src/features/cart/application/redux/cartSlice";
+import { addItem } from "@/src/features/cart/application/redux/cartSlice";
 import type { ICartItem } from "@/src/features/cart/domain/interfaces/ICartState";
-import { Container, Typography, Button, List, ListItem, ListItemText, IconButton, Stack, Paper } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Container, Typography, Button, Paper } from "@mui/material";
 
 export default function Home() {
   const items = useSelector((state: RootState) => state.cart.items);
