@@ -4,12 +4,16 @@
  * @property {number} id - Unique identifier for the cart item
  * @property {string} name - Name or description of the item
  */
-export interface ICartItem {
+export interface IProductItems {
     id: number;
     name: string;
-    quantity: number;
     price: number;
-    variation?: string;
+    image: string;
+    description: string;
+    category: string;
+    stock: number;
+    isActive: boolean;
+    variations?: string[];
 }
 
 /**
@@ -17,6 +21,6 @@ export interface ICartItem {
  * @interface ICartState
  * @property {CartItem[]} items - Array of items currently in the cart
  */
-export interface ICartState {
-    items: ICartItem[];
+export interface ICatalogoState {
+    items: IProductItems[];
 }
