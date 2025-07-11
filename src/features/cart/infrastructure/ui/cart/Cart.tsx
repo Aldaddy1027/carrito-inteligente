@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "@/src/features/common/application/redux/store";
 import { addItem, removeItem } from "@/src/features/cart/application/redux/cartSlice";
 import type { ICartItem } from "@/src/features/cart/domain/interfaces/ICartState";
-import { Container, Typography, Button, List, ListItem, ListItemText, IconButton, Stack, Paper, Box } from "@mui/material";
+import { Typography, Button, List, ListItem, ListItemText, IconButton, Stack, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const Cart = () => {
@@ -24,11 +24,6 @@ const Cart = () => {
             <Typography variant="h4" gutterBottom sx={{ textAlign: 'left' }}>
                 Carrito de compras
             </Typography>
-            <Stack direction="row" spacing={2} sx={{ mb: 2, justifyContent: 'flex-start', alignItems: 'center' }}>
-                <Button variant="contained" color="primary" onClick={handleAdd}>
-                    Agregar producto
-                </Button>
-            </Stack>
             <List>
                 {items.map((item: ICartItem) => (
                     <ListItem
