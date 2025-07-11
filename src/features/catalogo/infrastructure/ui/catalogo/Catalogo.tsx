@@ -3,7 +3,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "@/src/features/common/application/redux/store";
 import { addItem } from "@/src/features/cart/application/redux/cartSlice";
-import { Typography, Button, List, ListItem, ListItemText, Box, Select, MenuItem } from "@mui/material";
+import { Typography, Button, List, ListItem, ListItemText, Box, Select, MenuItem, Snackbar } from "@mui/material";
 import { IProductItems } from "@/src/features/catalogo/domain/interfaces/ICatalogoState";
 import { useEffect, useState } from 'react';
 import { setItems } from '@/src/features/catalogo/application/redux/catalogoSlice';
@@ -60,17 +60,31 @@ const Catalogo = () => {
      * @returns {Promise<void>}
      */
     const handleAddToCart = async (item: IProductItems) => {
-        const quantity = quantities[item.id] || 1;
+        try {
+            const quantity = quantities[item.id] || 1;
 
-        await dispatch(addItem({
-            ...item,
-            quantity: quantity
-        }));
+            await dispatch(addItem({
+                ...item,
+                quantity: quantity,
+                variation: selectedVariations[item.id]
+            }));
 
-        setQuantities((prev) => ({
-            ...prev,
-            [item.id]: 1
-        }));
+            setQuantities((prev) => ({
+                ...prev,
+                [item.id]: 1
+            }));
+
+            setSelectedVariations((prev) => ({
+                ...prev,
+                [item.id]: ''
+            }));
+
+            // TODO: Add snackbar state management
+            // setSnackbarOpen(true);
+            // setSnackbarMessage('Producto agregado al carrito exitosamente');
+        } catch (_) {
+            // TODO: Add error handling
+        }
     };
 
     return (

@@ -14,9 +14,9 @@ const Cart = () => {
     const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     /**
-     * Maneja el cambio de cantidad de un item en el carrito
-     * @param id - ID del item a modificar
-     * @param amount - Cantidad a sumar o restar (positivo para aumentar, negativo para disminuir)
+     * Handles the quantity change of an item in the cart
+     * @param id - ID of the item to modify
+     * @param amount - Amount to add or subtract (positive to increase, negative to decrease)
      */
     const handleQuantityChange = (id: number, amount: number) => {
         const item = items.find(item => item.id === id);
